@@ -1,27 +1,46 @@
-# CryptoVitae
+## Generate Keypair
+File - `generate-keypair.ts`
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
+## Reading Data from the Solana Network
+File - `check-balance.ts`
 
-## Development server
+### Pseudocode
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Connect with a Solana Cluster (Devnet)
+2. Get the Public Key.
+3. Get the Balance associated with the Public Key Address from the Connection.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```TypeScript
+const connection = new Connection(clusterApiUrl("devnet"));
+const publicKey = new PublicKey(PUBLIC_KEY);
 
-## Build
+(async () => {
+  const balance = await connection.getBalance(publicKey);
+  const balanceInSol = balance / LAMPORTS_PER_SOL;
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  console.log(`Balance of ${PUBLIC_KEY} is ${balanceInSol} SOL`);
+})()
+```
 
-## Running unit tests
+## Create Transactions
+File - `transfer.ts`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Summary
 
-## Running end-to-end tests
+```
+/* Step 1: Get the Keys
+- Keypair of the Sender
+- Public Key of the Receiver
+*/
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+// Step 2: Establish a connection with the Solana Network
 
-## Further help
+// Step 3: Create a Transaction
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+// Step 4: Create an Instruction
+
+// Step 5: Add the Instruction to the Transaction
+
+// Step 6: Send the transaction to the cluster and confirm it
+```
