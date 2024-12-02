@@ -44,3 +44,43 @@ File - `transfer.ts`
 
 // Step 6: Send the transaction to the cluster and confirm it
 ```
+
+## Using Custom On chain Programs
+
+When working with other programs, however, you’ll need to create instructions manually. With @solana/web3.js, you can create instructions with the TransactionInstruction constructor:
+
+```TypeScript
+const instruction = new TransactionInstruction({
+  programId: PublicKey;
+  keys: [
+    {
+      pubkey: Pubkey,
+      isSigner: boolean,
+      isWritable: boolean,
+    },
+  ],
+  data?: Buffer;
+});
+
+/*
+  TransactionInstruction() takes 3 fields:
+
+  The programId field is fairly self-explanatory: it’s the public key (also called the 'address' or 'program ID') of the program.
+
+  keys is an array of accounts and how they will be used during the transaction. You need to know the behavior of the program you are calling and ensure that you provide all of the necessary accounts in the array.
+
+  pubkey - the public key of the account
+  isSigner - a boolean representing whether or not the account is a signer on the transaction
+  isWritable - a boolean representing whether or not the account is written to during the transaction's execution
+  an optional Buffer containing data to pass to the program. 
+*/
+```
+
+### To show more info in the Solana Explorer
+
+```TypeScript
+console.log(
+  `You can view your transaction on Solana Explorer at:\nhttps://explorer.solana.com/tx/${signature}?cluster=devnet`,
+);
+```
+
